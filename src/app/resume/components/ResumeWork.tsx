@@ -2,24 +2,20 @@ interface ResumeWorkProps {
   employer: string;
   jobTitle: string;
   location: string;
-  description: string;
+  summary: string;
   dates: string;
-  client: string;
-  bullets: string[];
 }
 
 export default function ResumeWork(props: ResumeWorkProps) {
   return (
-    <>
-      <h1>{props.employer}</h1>
-      <h2>{props.jobTitle}</h2>
-      <h3>{props.location}</h3>
-      <h4>{props.dates}</h4>
-      <p>{props.client}</p>
-      <p>{props.description}</p>
-      {props.bullets.map((line, index) => (
-        <p key={index}>{line}</p>
-      ))}
-    </>
+    <div className="font-share-tech-mono flex flex-col pt-4 text-sm leading-5">
+      <div className="flex justify-between">
+        <h1 className="font-bold">{props.employer}</h1>
+        <h4 className="font-bold">{props.dates}</h4>
+      </div>
+      <h2 className="font-bold">{props.jobTitle}</h2>
+      <h3 className="pb-2 font-bold">{props.location}</h3>
+      <p>{props.summary}</p>
+    </div>
   );
 }
