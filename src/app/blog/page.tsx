@@ -46,11 +46,34 @@ export default async function Blog() {
   );
   const mostRecentPost = sortedPosts[0];
 
+  function formatDate(dateString: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Intl.DateTimeFormat("en-US", options).format(
+      new Date(dateString),
+    );
+  }
+
+  const readableDate = formatDate(mostRecentPost.date);
+
   return (
-    <div className="h-screen overflow-auto px-10">
-      <div className="pt-10"></div>
-      <h1>{mostRecentPost.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: mostRecentPost.content }} />
+    <div className="h-screen font-share-tech-mono items-center flex flex-col w-full max-w-[1000px] overflow-auto px-10">
+      <div className="h-40"></div>
+      <h1 className="justify-center uppercase flex">
+        Posted on {readableDate}
+      </h1>
+      <div className="w-full border-[.5px] border-b-zinc-300"></div>
+      <h2 className="justify-center font-bold text-5xl  uppercase flex">
+        {mostRecentPost.title}
+      </h2>
+      <div className="w-full border-[.5px] border-t-zinc-300"></div>
+      <div
+        className="prose pt-8 font-share-tech-mono"
+        dangerouslySetInnerHTML={{ __html: mostRecentPost.content }}
+      />
     </div>
   );
 }

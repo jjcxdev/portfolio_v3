@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@fontsource/share-tech-mono": "^5.0.8",
+    "@tailwindcss/typography": "^0.5.10",
     "gray-matter": "^4.0.3",
-    "next": "14.1.0",
+    "next": "^14.1.0",
     "react": "^18",
     "react-dom": "^18",
     "remark": "^15.0.1",
