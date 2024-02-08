@@ -1,5 +1,5 @@
 ---
-title: "I Created a macOS App to Aid in Productivity"
+title: "I Created a macOS App"
 date: "2023-04-01"
 ---
 
