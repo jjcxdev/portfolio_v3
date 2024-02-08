@@ -60,13 +60,16 @@ export default async function Blog() {
   const readableDate = formatDate(mostRecentPost.date);
 
   return (
-    <div className="h-screen font-share-tech-mono items-center flex flex-col w-full max-w-[1000px] overflow-auto px-10">
+    <div className="w-full flex justify-center">
+    <div className="h-full font-share-tech-mono items-center flex flex-col w-full max-w-[1000px] overflow-auto px-10">
       <div className="h-40"></div>
-      <h1 className="justify-center uppercase flex">
-        Posted on {readableDate}
+      <div className="flex gap-12">
+      <div>
+      <h1 className="justify-center text-sm text-zinc-400 uppercase flex">
+        {readableDate}
       </h1>
       <div className="w-full border-[.5px] border-b-zinc-300"></div>
-      <h2 className="justify-center font-bold text-5xl  uppercase flex">
+      <h2 className="justify-center font-bold text-5xl py-2 uppercase flex">
         {mostRecentPost.title}
       </h2>
       <div className="w-full border-[.5px] border-t-zinc-300"></div>
@@ -74,6 +77,11 @@ export default async function Blog() {
         className="prose pt-8 font-share-tech-mono"
         dangerouslySetInnerHTML={{ __html: mostRecentPost.content }}
       />
+      </div>
+      <div className="pt-20">Previous Posts</div>
+      </div>
+<div className="h-20"></div>
+    </div>
     </div>
   );
 }
