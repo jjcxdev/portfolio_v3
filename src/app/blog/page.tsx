@@ -13,21 +13,26 @@ interface PreviousPost {
 
 async function getPreviousPosts(directoryPath: string): Promise<PreviousPost[]> {
   const files = await fs.readdir(directoryPath);
-  const sortedFiles = files.sort((a,b) => b.localeCompare(a)).slice(1);
 
-  const previousPosts = await Promise.all(sortedFiles.map(async (filename) => {
-  const filePath = path.join(directoryPath, filename);
-  const fileContents = await fs.readFile(filePath, 'utf8');
-  const {data} = matter(fileContents);
 
-  const slug = filename.replace(/\.md$/, '');
+  const markdownFiles = files.filter(file => file.endsWith('.md') && file !== '.DS_Store');
+  const sortedFiles = markdownFiles.sort((a,b) => b.localeCompare(a)).slice(1);
 
-  return {
-  title: data.title as string,
-  date: data.date as string,
-  slug,
-  };
-  }));
+  const previousPosts = await Promise.all(
+    sortedFiles.map(async (filename) => {
+      const filePath = path.join(directoryPath, filename);
+      const fileContents = await fs.readFile(filePath, 'utf8');
+      const {data} = matter(fileContents);
+
+      const slug = filename.replace(/\.md$/, '');
+
+      return {
+        title: data.title as string,
+        date: data.date as string,
+        slug,
+      };
+    })
+  );
 
   return previousPosts;
 }
@@ -66,13 +71,13 @@ export default async function BlogPost() {
   const postsDirectory = path.join(process.cwd(), 'src/app/blog/_posts');
   const mostRecentFilePath = await getMostRecentMarkdownFile(postsDirectory);
   const mostRecentPost: Post = await readMarkdownFile(mostRecentFilePath);
-const previousPosts = await getPreviousPosts(postsDirectory);
+  const previousPosts = await getPreviousPosts(postsDirectory);
 
   return (
     <div className="w-full flex justify-center">
       <div className="h-full font-share-tech-mono items-center flex flex-col w-full max-w-[1000px] overflow-auto px-10">
         <div className="h-40"></div>
-        <div className="flex gap-12">
+        <div className="flex justify-between w-full">
           <div>
             <h1 className="justify-center text-sm text-zinc-400 uppercase flex">
               {mostRecentPost.date}
@@ -87,7 +92,7 @@ const previousPosts = await getPreviousPosts(postsDirectory);
               dangerouslySetInnerHTML={{ __html: mostRecentPost.content }}
             />
           </div>
-          
+          {/* Previous Posts */}         
           <div className="pt-20 w-fit whitespace-nowrap flex-col">
             <h3 className="font-bold underline">Previous Posts</h3>
 
